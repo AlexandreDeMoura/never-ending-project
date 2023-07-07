@@ -4,6 +4,7 @@ import { InputField } from "./input/InputField";
 import { InputWrapper } from "./input/InputWrapper";
 import { useForm } from "react-hook-form";
 import { Todo } from "../App";
+import { v4 as uuidv4, v4 } from "uuid";
 
 type TodoFormProps = {
   addTodo: (todo: Todo) => void;
@@ -21,7 +22,10 @@ export const TodoForm = ({ addTodo }: TodoFormProps) => {
     errors.title?.type === "required" && "Please add a title to your todo";
 
   const onSubmit = (data: Todo) => {
-    addTodo(data);
+    addTodo({
+      title: data.title,
+      id: v4(),
+    });
     setValue("title", "");
   };
 
