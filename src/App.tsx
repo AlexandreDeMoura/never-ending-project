@@ -14,7 +14,6 @@ function App() {
   }
 
   function removeTodo(id: string) {
-    console.log(id);
     setTodos([...todos.filter((todo) => todo.id !== id)]);
   }
 

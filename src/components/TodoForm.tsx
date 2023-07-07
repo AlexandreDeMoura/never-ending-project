@@ -4,7 +4,7 @@ import { InputField } from "./input/InputField";
 import { InputWrapper } from "./input/InputWrapper";
 import { useForm } from "react-hook-form";
 import { Todo } from "../App";
-import { v4 as uuidv4, v4 } from "uuid";
+import { v4 as uuidv4 } from "uuid";
 
 type TodoFormProps = {
   addTodo: (todo: Todo) => void;
@@ -24,7 +24,7 @@ export const TodoForm = ({ addTodo }: TodoFormProps) => {
   const onSubmit = (data: Todo) => {
     addTodo({
       title: data.title,
-      id: v4(),
+      id: uuidv4(),
     });
     setValue("title", "");
   };
