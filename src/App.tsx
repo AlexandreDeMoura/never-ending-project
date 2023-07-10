@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import RemoveIcon from "../src/assets/icon-remove.svg";
 import { TodoForm } from "./components/TodoForm";
 
 export type Todo = {
@@ -26,13 +27,14 @@ function App() {
             <div
               key={todo.id}
               data-testid="todo"
-              className="flex p-2 bg-slate-50 space-x-4"
+              className="flex items-center p-2 bg-slate-50 space-x-4"
             >
               <div>{todo.title}</div>
               <img
+                src={RemoveIcon}
                 alt="remove todo"
                 onClick={() => removeTodo(todo.id)}
-                className="cursor-pointer hover:bg-slate-100"
+                className="cursor-pointer w-4"
               />
             </div>
           ))}
