@@ -44,3 +44,24 @@ it("Should remove the right todo when user click on remove image", async () => {
   await user.click(screen.getByRole("img", { name: "remove todo" }));
   expect(screen.queryAllByTestId("todo")).toHaveLength(0);
 });
+
+it("Should edit the right todo when user click on edit image", async () => {
+  const { user } = setup(<App />);
+
+  await user.type(screen.getByRole("textbox"), "first todo");
+  await user.click(screen.getByRole("button", { name: /Create todo/i }));
+  await user.type(screen.getByRole("textbox"), "second todo");
+  await user.click(screen.getByRole("button", { name: /Create todo/i }));
+  expect(screen.getAllByTestId("todo")).toHaveLength(2);
+
+  await user.click(screen.getAllByRole("img", { name: "edit todo" })[0]);
+  await user.clear(screen.getByRole("textbox"));
+  await user.type(screen.getByRole("textbox"), "first todo edited");
+  await user.click(screen.getByRole("button", { name: /Edit todo/i }));
+
+  expect(screen.getAllByTestId("todo")).toHaveLength(2);
+  expect(screen.getAllByTestId("todo")[0].textContent).toEqual(
+    "first todo edited"
+  );
+  expect(screen.getAllByTestId("todo")[1].textContent).toEqual("second todo");
+});

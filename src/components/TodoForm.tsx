@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button } from "./Button";
 import { InputField } from "./input/InputField";
 import { InputWrapper } from "./input/InputWrapper";
@@ -7,10 +7,11 @@ import { Todo } from "../App";
 import { v4 as uuidv4 } from "uuid";
 
 type TodoFormProps = {
-  addTodo: (todo: Todo) => void;
+  handleTodoChange: (todo: Todo) => void;
+  todoToEdit: Todo | undefined;
 };
 
-export const TodoForm = ({ addTodo }: TodoFormProps) => {
+export const TodoForm = ({ handleTodoChange, todoToEdit }: TodoFormProps) => {
   const {
     register,
     handleSubmit,
@@ -18,13 +19,19 @@ export const TodoForm = ({ addTodo }: TodoFormProps) => {
     formState: { errors },
   } = useForm<Todo>();
 
+  useEffect(() => {
+    if (todoToEdit) {
+      setValue("title", todoToEdit.title);
+    }
+  }, [todoToEdit, setValue]);
+
   const FirstNameErrorMessage =
     errors.title?.type === "required" && "Please add a title to your todo";
 
   const onSubmit = (data: Todo) => {
-    addTodo({
+    handleTodoChange({
       title: data.title,
-      id: uuidv4(),
+      id: todoToEdit ? todoToEdit.id : uuidv4(),
     });
     setValue("title", "");
   };
@@ -47,7 +54,7 @@ export const TodoForm = ({ addTodo }: TodoFormProps) => {
           />
         </InputWrapper>
       </div>
-      <Button type="submit">Create todo</Button>
+      <Button type="submit">{todoToEdit ? "Edit" : "Create"} todo</Button>
     </form>
   );
 };
