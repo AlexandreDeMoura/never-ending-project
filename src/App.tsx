@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { produce } from "immer";
 import RemoveIcon from "../src/assets/icon-remove.svg";
 import EditIcon from "../src/assets/icon-edit.svg";
 import { TodoForm } from "./components/TodoForm";
@@ -25,11 +26,13 @@ function App() {
   }
 
   function editTodo(todo: Todo) {
-    const newTodos = [...todos];
-    const newTodoIndex = todos.findIndex((todo) => todo.id === todoToEditId);
-    newTodos[newTodoIndex] = todo;
+    setTodos(
+      produce(todos, (draftTodos) => {
+        const newTodoIndex = draftTodos.findIndex((t) => t.id === todoToEditId);
+        draftTodos[newTodoIndex] = todo;
+      })
+    );
 
-    setTodos(newTodos);
     setTodoToEditId("");
   }
 
