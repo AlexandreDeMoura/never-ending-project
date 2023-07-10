@@ -34,7 +34,7 @@ it("Should not create a todo if the input field is empty", async () => {
   expect(todo).toHaveLength(0);
 });
 
-it("Should create one todo per user interaction with the right todo's title", async () => {
+it("Should remove the right todo when user click on remove image", async () => {
   const { user } = setup(<App />);
 
   await user.type(screen.getByRole("textbox"), "oui oui baguette");
