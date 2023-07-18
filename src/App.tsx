@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { produce } from "immer";
 import RemoveIcon from "../src/assets/icon-remove.svg";
 import EditIcon from "../src/assets/icon-edit.svg";
-import { TodoForm } from "./components/TodoForm";
+import { TodoForm } from "./components/TodoForm/TodoForm";
+
+export type UrgencyLevel = "low" | "medium" | "high";
 
 export type Todo = {
   title: string;
   id: string;
+  urgencyLevel: UrgencyLevel;
 };
 
 function App() {
